@@ -9,7 +9,31 @@ function TwitchUserInfoAPI(userName) {
   this.UserInfo = undefined;
   this.ChannelInfo = undefined;
   this.StreamInfo = undefined;
+  
+  this.UserExists = undefined;
+  this.UserIsStreaming = undefined;
 }
+
+TwitchUserInfoAPI.prototype.parseUserInfo = function() {
+  "use strict";
+  
+  if (this.UserInfo.hasOwnProperty("error")) {
+    this.UserExists = false;
+  } else {
+    this.UserExists = true;
+  }
+};
+
+TwitchUserInfoAPI.prototype.parseStreamInfo = function() {
+  "use strict";
+  
+  if (this.StreamInfo.stream === null) {
+    this.UserIsStreaming = false;
+  } else {
+    this.UserIsStreaming = true;
+  }
+  
+};
 
 TwitchUserInfoAPI.prototype.isAllDataReady = function() {
   "use strict";
@@ -33,11 +57,14 @@ TwitchUserInfoAPI.prototype.getUserInfo = function(allInfoReadyCallback) {
     url: apiURL + getUserInfoStr,
     data: null,
     success: function(obj) {
-      oThis.UserInfo = obj;
       
-      if (oThis.isAllDataReady()) {
+      oThis.UserInfo = obj;
+      oThis.parseUserInfo();
+      
+      if (oThis.isAllDataReady() && $.isFunction(allInfoReadyCallback)) {
         allInfoReadyCallback();
       }
+      
     }
   });
   
@@ -48,11 +75,14 @@ TwitchUserInfoAPI.prototype.getUserInfo = function(allInfoReadyCallback) {
     url: apiURL + getStreamInfoStr,
     data: null,
     success: function(obj) {
-      oThis.StreamInfo = obj;
       
-      if (oThis.isAllDataReady()) {
+      oThis.StreamInfo = obj;
+      oThis.parseStreamInfo();
+      
+      if (oThis.isAllDataReady() && $.isFunction(allInfoReadyCallback)) {
         allInfoReadyCallback();
       }
+      
     }
   });
   
@@ -63,11 +93,13 @@ TwitchUserInfoAPI.prototype.getUserInfo = function(allInfoReadyCallback) {
     url: apiURL + getChannelInfoStr,
     data: null,
     success: function(obj) {
+      
       oThis.ChannelInfo = obj;
       
-      if (oThis.isAllDataReady()) {
+      if (oThis.isAllDataReady() && $.isFunction(allInfoReadyCallback)) {
         allInfoReadyCallback();
       }
+      
     }
   });
   
