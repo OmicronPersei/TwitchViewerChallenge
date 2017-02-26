@@ -122,12 +122,50 @@ function TwitchUserDisplay(userName, DOMID) {
   
   var initialBlankDisplay = 
       "<div class='panel panel-default'>" +
-      " <div class='panel-body'>" + userName + "...</div>" +
+      " <div class='panel-body'> Loading " + userName + "...</div>" +
       "</div>";
   
   $("#" + this.DOMID).html(initialBlankDisplay);
   
 }
+
+TwitchUserDisplay.prototype.displayNonExistantUser = function() {
+  "use strict";
+  
+  var userNoExistDisplay = 
+      "<div class='panel panel-default'>" +
+      " <div class='panel-body'>(" + this.UserName + " does not exist).</div>" +
+      "</div>";
+  
+  $("#" + this.DOMID).html(userNoExistDisplay);
+  
+};
+
+TwitchUserDisplay.prototype.displayExistingUser = function() {
+  "use strict";
+  
+};
+
+TwitchUserDisplay.prototype.displayLoadedUser = function() {
+  "use strict";
+  
+  if (this.UserExists) {
+    this.displayExistingUser();
+  } else {
+    this.displayNonExistantUser();
+  }
+  
+};
+
+TwitchUserDisplay.prototype.loadUserInfo = function() {
+  "use strict";
+  
+  var oThis = this;
+  this.TwitchUserInfoAPIObj.getUserInfo(function() {
+    oThis.displayLoadedUser();
+  });
+  this.displayLoadedUser();
+};
 
 var setupTwitchUsers = function(twitchUsernames) {
   "use strict";
