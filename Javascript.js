@@ -134,7 +134,7 @@ TwitchUserDisplay.prototype.displayNonExistantUser = function() {
   
   var userNoExistDisplay = 
       "<div class='panel panel-default'>" +
-      " <div class='panel-body'>(" + this.UserName + " does not exist).</div>" +
+      " <div class='panel-body'>(" + this.TwitchUserInfoAPIObj.UserName + " does not exist).</div>" +
       "</div>";
   
   $("#" + this.DOMID).html(userNoExistDisplay);
@@ -143,13 +143,27 @@ TwitchUserDisplay.prototype.displayNonExistantUser = function() {
 
 TwitchUserDisplay.prototype.displayExistingUser = function() {
   "use strict";
+    
+  var mediaBody = "";
   
+  var mediaContainer = 
+      "<div class='panel panel-default'><div class='panel-body'>" +
+      "   <div class='media'>" +
+      "     <div class='media-left'><img class='media-object twitchUserIcon' src='" + this.TwitchUserInfoAPIObj.UserIcon + "'></div>" +
+      "       <div class='media-body'>" +
+      "       <div class='media-heading'><h4>" + this.TwitchUserInfoAPIObj.UserName + "</h4></div>" + 
+                mediaBody + 
+      "     </div>" +
+      "   </div>" +
+      "</div></div>";
+  
+  $("#" + this.DOMID).html(mediaContainer);
 };
 
 TwitchUserDisplay.prototype.displayLoadedUser = function() {
   "use strict";
   
-  if (this.UserExists) {
+  if (this.TwitchUserInfoAPIObj.UserExists) {
     this.displayExistingUser();
   } else {
     this.displayNonExistantUser();
@@ -161,10 +175,13 @@ TwitchUserDisplay.prototype.loadUserInfo = function() {
   "use strict";
   
   var oThis = this;
+    
+  //this.displayLoadedUser();
+    
   this.TwitchUserInfoAPIObj.getUserInfo(function() {
     oThis.displayLoadedUser();
   });
-  this.displayLoadedUser();
+  
 };
 
 var setupTwitchUsers = function(twitchUsernames) {
@@ -184,6 +201,7 @@ var setupTwitchUsers = function(twitchUsernames) {
   //Now, create TwitchUserDisplays for each twitch username.
   twitchUsernames.forEach(function(username) {
     var userDisplay = new TwitchUserDisplay(username, "twitchUser" + username);
+    userDisplay.loadUserInfo();
   });
   
 };
