@@ -120,24 +120,32 @@ function TwitchUserDisplay(userName, DOMID) {
   this.DOMID = DOMID;
   this.TwitchUserInfoAPIObj = new TwitchUserInfoAPI(userName);
   
+  this.DOMIDinnerDisplay = DOMID + "innerDisplay";
+  
   var initialBlankDisplay = 
       "<div class='panel panel-default'>" +
-      " <div class='panel-body'> Loading " + userName + "...</div>" +
+      " <div class='panel-body'>" +
+      "   <div id='" + this.DOMIDinnerDisplay +"' />" +
+      " </div>" +
       "</div>";
   
   $("#" + this.DOMID).html(initialBlankDisplay);
   
+  $("#" + this.DOMIDinnerDisplay).html("Loading " + userName + "...");
 }
+
+TwitchUserDisplay.prototype.setDisplay = function(html) {
+  "use strict";
+  
+  $("#" + this.DOMIDinnerDisplay).html(html);
+};
 
 TwitchUserDisplay.prototype.displayNonExistantUser = function() {
   "use strict";
   
-  var userNoExistDisplay = 
-      "<div class='panel panel-default'>" +
-      " <div class='panel-body'>(" + this.TwitchUserInfoAPIObj.UserName + " does not exist).</div>" +
-      "</div>";
+  var userNoExistDisplay = "(" + this.TwitchUserInfoAPIObj.UserName + " does not exist).";
   
-  $("#" + this.DOMID).html(userNoExistDisplay);
+  this.setDisplay(userNoExistDisplay);
   
 };
 
@@ -146,18 +154,26 @@ TwitchUserDisplay.prototype.displayExistingUser = function() {
     
   var mediaBody = "";
   
-  var mediaContainer = 
-      "<div class='panel panel-default'><div class='panel-body'>" +
-      "   <div class='media'>" +
-      "     <div class='media-left'><img class='media-object twitchUserIcon' src='" + this.TwitchUserInfoAPIObj.UserIcon + "'></div>" +
-      "       <div class='media-body'>" +
-      "       <div class='media-heading'><h4>" + this.TwitchUserInfoAPIObj.UserName + "</h4></div>" + 
-                mediaBody + 
-      "     </div>" +
-      "   </div>" +
-      "</div></div>";
+  var channelURL = this.TwitchUserInfoAPIObj.ChannelInfo.url;
   
-  $("#" + this.DOMID).html(mediaContainer);
+  if (this.TwitchUserInfoAPIObj.UserIsStreaming) {
+    mediaBody = "<p>" + this.TwitchUserInfoAPIObj.ChannelInfo.status + "</p>";
+  }
+  
+  var mediaContainer = 
+      "<a href='" + channelURL + "' target='_blank'>" +
+      " <div class='media'>" +
+      "   <div class='media-left'><img class='media-object twitchUserIcon' src='" + this.TwitchUserInfoAPIObj.UserIcon + "'></div>" +
+      "   <div class='media-body'>" +
+      "     <div class='media-heading'><h4>" + this.TwitchUserInfoAPIObj.UserName + "</h4></div>" + 
+            mediaBody + 
+      "   </div>" +
+      " </div>" +
+      "</a>";
+  
+  
+  
+  this.setDisplay(mediaContainer);
 };
 
 TwitchUserDisplay.prototype.displayLoadedUser = function() {
@@ -209,7 +225,17 @@ var setupTwitchUsers = function(twitchUsernames) {
 $(document).ready(function() {
   "use strict";
   
-  var twitchUsers = ["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas"];
+  var twitchUsers = [
+    "ESL_SC2", 
+    "OgamingSC2", 
+    "cretetion", 
+    "freecodecamp", 
+    "storbeck", 
+    "habathcx", 
+    "RobotCaleb", 
+    "noobs2ninjas",
+    "comster404",
+    "brunofin" ];
   
   setupTwitchUsers(twitchUsers);
   
