@@ -1,3 +1,56 @@
-.media img.twitchUserIcon {
-  max-height: 75px;
+body {
+  background-color: #eaf3e0;
+}
+
+#userListPanel {
+  max-width: 800px;
+  margin: auto;
+}
+
+.userItem {
+  font-family: Segoe UI,sans-serif;
+  margin: 10px 0px 10px 0px;
+  padding: 10px;
+  background-color: #405065;
+  min-height: 105px;
+}
+
+.userItem.userStreamingItem {
+  background-color: #9aaa89;
+}
+
+.userItem a {
+  color: #888;
+/*  font-style: italic;*/
+  font-weight: 300;
+}
+
+.userItem.userStreamingItem a {
+  color: #FFF;
+  font-style: normal;
+  font-weight: 500;
+}
+
+img.twitchUserIcon {
+  border-width: 2px;
+  border-style: solid;
+  border-color: white;
+  height: 85px;
+  margin: 0px;
+}
+
+
+.userItem .usernameTitle {
+  font-size: 30px;
+}
+
+.userItem .usernameTitle .usernameInfoString {
+  font-size: 14px;
+  font-weight: normal;
+  margin-left: 15px;
+}
+
+.userItem .userStreamInfo {
+  color: #BBB;
+  font-size: 18px;
 }

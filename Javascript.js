@@ -122,12 +122,8 @@ function TwitchUserDisplay(userName, DOMID) {
   
   this.DOMIDinnerDisplay = DOMID + "innerDisplay";
   
-  var initialBlankDisplay = 
-      "<div class='panel panel-default'>" +
-      " <div class='panel-body'>" +
-      "   <div id='" + this.DOMIDinnerDisplay +"' />" +
-      " </div>" +
-      "</div>";
+  var initialBlankDisplay = "<div class='userItem' id='" + this.DOMIDinnerDisplay + "' />";
+      
   
   $("#" + this.DOMID).html(initialBlankDisplay);
   
@@ -151,29 +147,37 @@ TwitchUserDisplay.prototype.displayNonExistantUser = function() {
 
 TwitchUserDisplay.prototype.displayExistingUser = function() {
   "use strict";
+  
+  var userInfo = "";
+  
+  var usernameTitleText = this.TwitchUserInfoAPIObj.UserName;
+  if (!this.TwitchUserInfoAPIObj.UserIsStreaming) {
+    usernameTitleText += "<span class='usernameInfoString'>(user offline)</span>";
+  }
+  
+  var usernameTitle = "<div class='usernameTitle'>" + usernameTitleText + "</div>";
+  
+  if (this.TwitchUserInfoAPIObj.UserIsStreaming) {
+    $("#" + this.DOMIDinnerDisplay).addClass("userStreamingItem");
     
-  var mediaBody = "";
+    userInfo = "<p class='userStreamInfo'>" + this.TwitchUserInfoAPIObj.ChannelInfo.status + "</p>";
+  }
+
   
   var channelURL = this.TwitchUserInfoAPIObj.ChannelInfo.url;
   
-  if (this.TwitchUserInfoAPIObj.UserIsStreaming) {
-    mediaBody = "<p>" + this.TwitchUserInfoAPIObj.ChannelInfo.status + "</p>";
-  }
-  
-  var mediaContainer = 
+  var userDisplay = 
       "<a href='" + channelURL + "' target='_blank'>" +
       " <div class='media'>" +
       "   <div class='media-left'><img class='media-object twitchUserIcon' src='" + this.TwitchUserInfoAPIObj.UserIcon + "'></div>" +
       "   <div class='media-body'>" +
-      "     <div class='media-heading'><h4>" + this.TwitchUserInfoAPIObj.UserName + "</h4></div>" + 
-            mediaBody + 
+      "     <div class='media-heading'>" + usernameTitle + "</div>" + 
+            userInfo + 
       "   </div>" +
       " </div>" +
       "</a>";
   
-  
-  
-  this.setDisplay(mediaContainer);
+  this.setDisplay(userDisplay);
 };
 
 TwitchUserDisplay.prototype.displayLoadedUser = function() {
