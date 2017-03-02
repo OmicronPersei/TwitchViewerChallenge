@@ -1,5 +1,6 @@
 body {
   background-color: #0e110c;
+  font-family: Segoe UI,sans-serif;
 }
 
 #userListPanel {
@@ -7,8 +8,34 @@ body {
   margin: auto;
 }
 
+#userListPanelHeader {
+  margin-top: 10px;
+  display: block;
+  
+/*  background-color: #19222e;*/
+  min-height: 120px;
+  border-style:solid;
+  border-color: #83966c;
+  border-width: thick;
+  vertical-align: middle;
+}
+#userListPanelHeader>div {
+  display: table;
+  margin: auto;
+  min-height: 120px;
+}
+
+#userListPanelHeader>div>div {
+  display:table-cell;
+  vertical-align: middle;
+  
+  font-size: 50px;
+  font-weight: 100;
+  color: white;
+}
+
 .userItem {
-  font-family: Segoe UI,sans-serif;
+  
   margin: 10px 0px 10px 0px;
 /*  padding: 10px;*/
   background-color: #19222e;
@@ -105,7 +132,7 @@ img.twitchUserIcon {
   border-width: 2px;
   border-style: solid;
   
-  height: 70px;
+  height: 100px;
   margin: 0px;
 }
 
