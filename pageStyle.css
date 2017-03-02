@@ -1,5 +1,5 @@
 body {
-  background-color: #eaf3e0;
+  background-color: #0e110c;
 }
 
 #userListPanel {
@@ -10,38 +10,51 @@ body {
 .userItem {
   font-family: Segoe UI,sans-serif;
   margin: 10px 0px 10px 0px;
+/*  padding: 10px;*/
+  background-color: #19222e;
+  min-height: 120px;
+  color: #666;
+  display: table;
+}
+
+.userItem .media {
+  padding: 20px 20px 20px 40px;
+  margin: auto;
+  vertical-align: middle;
+  display: table-cell;
+}
+
+.userItem .media .media-heading {
+  margin: 0px;
   padding: 10px;
-  background-color: #405065;
-  min-height: 105px;
 }
 
-.userItem.userStreamingItem {
-  background-color: #9aaa89;
+.userItem .media .media-body p {
+  margin: 0px;
+  padding: 10px;
 }
 
-.userItem a {
-  color: #888;
+.userItem .media .media-left {
+  margin: auto;
+  padding: 0px;
+  vertical-align: middle;
+}
+
+.userItem .media .media-body {
+/*  padding-left: 20px;*/
+  margin: 0px;
+  padding: 5px;
+}
+
+.userItem {
+  color: #666;
 /*  font-style: italic;*/
   font-weight: 300;
 }
 
-.userItem.userStreamingItem a {
-  color: #FFF;
-  font-style: normal;
-  font-weight: 500;
-}
-
-img.twitchUserIcon {
-  border-width: 2px;
-  border-style: solid;
-  border-color: white;
-  height: 85px;
-  margin: 0px;
-}
-
-
 .userItem .usernameTitle {
-  font-size: 30px;
+  font-size: 24px;
+  font-weight: 200;
 }
 
 .userItem .usernameTitle .usernameInfoString {
@@ -51,6 +64,55 @@ img.twitchUserIcon {
 }
 
 .userItem .userStreamInfo {
-  color: #BBB;
-  font-size: 18px;
+  color: #EEE;
+  font-size: 16px;
 }
+
+.userItem.userStreamingItem {
+  background-color: #83966c;
+  text-shadow: 0px 0px 20px black;
+  color: white;
+  font-style: normal;
+  font-weight: 500;
+}
+
+a:hover, a:focus .userItem.userStreamingItem {
+  text-decoration: none;
+}
+
+.userItem.userStreamingItem .usernameTitle {
+  font-size: 38px;
+}
+
+.userItem.userDoesntExistItem {
+  display: block;
+}
+
+.userItem.userDoesntExistItem>div {
+  display: table;
+  margin: auto;
+  min-height: 120px;
+  float:left;
+  padding: 20px;
+}
+
+.userItem.userDoesntExistItem>div>div {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+img.twitchUserIcon {
+  border-width: 2px;
+  border-style: solid;
+  
+  height: 70px;
+  margin: 0px;
+}
+
+.userStreamingItem img.twitchUserIcon {
+  border-color: white;
+}
+
+
+
+

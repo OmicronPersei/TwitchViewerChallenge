@@ -122,13 +122,23 @@ function TwitchUserDisplay(userName, DOMID) {
   
   this.DOMIDinnerDisplay = DOMID + "innerDisplay";
   
-  var initialBlankDisplay = "<div class='userItem' id='" + this.DOMIDinnerDisplay + "' />";
+  var initialBlankDisplay = 
+      "<a target='_blank'>" + 
+      " <div class='userItem' id='" + this.DOMIDinnerDisplay + "' />" +
+      "</a>";
       
   
   $("#" + this.DOMID).html(initialBlankDisplay);
   
   $("#" + this.DOMIDinnerDisplay).html("Loading " + userName + "...");
 }
+
+TwitchUserDisplay.prototype.setURLOfDisplay = function(URL) {
+  "use strict";
+  
+  $("#" + this.DOMIDinnerDisplay).parent().attr("href", URL);
+  
+};
 
 TwitchUserDisplay.prototype.setDisplay = function(html) {
   "use strict";
@@ -139,7 +149,9 @@ TwitchUserDisplay.prototype.setDisplay = function(html) {
 TwitchUserDisplay.prototype.displayNonExistantUser = function() {
   "use strict";
   
-  var userNoExistDisplay = "(" + this.TwitchUserInfoAPIObj.UserName + " does not exist).";
+  var userNoExistDisplay = "<div><div>(" + this.TwitchUserInfoAPIObj.UserName + " does not exist).</div></div>";
+  
+  $("#" + this.DOMIDinnerDisplay).addClass("userDoesntExistItem");
   
   this.setDisplay(userNoExistDisplay);
   
@@ -165,9 +177,10 @@ TwitchUserDisplay.prototype.displayExistingUser = function() {
 
   
   var channelURL = this.TwitchUserInfoAPIObj.ChannelInfo.url;
+  this.setURLOfDisplay(channelURL);
   
   var userDisplay = 
-      "<a href='" + channelURL + "' target='_blank'>" +
+      "<!--<a href='" + channelURL + "' target='_blank'>-->" +
       " <div class='media'>" +
       "   <div class='media-left'><img class='media-object twitchUserIcon' src='" + this.TwitchUserInfoAPIObj.UserIcon + "'></div>" +
       "   <div class='media-body'>" +
@@ -175,9 +188,10 @@ TwitchUserDisplay.prototype.displayExistingUser = function() {
             userInfo + 
       "   </div>" +
       " </div>" +
-      "</a>";
+      "<!--</a>-->";
   
   this.setDisplay(userDisplay);
+  
 };
 
 TwitchUserDisplay.prototype.displayLoadedUser = function() {
