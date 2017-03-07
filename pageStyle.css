@@ -120,7 +120,7 @@ a:hover, a:focus .userItem.userStreamingItem {
   margin: auto;
   min-height: 120px;
   float:left;
-  padding: 20px;
+  padding: 40px;
 }
 
 .userItem.userDoesntExistItem>div>div {
